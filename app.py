@@ -26,6 +26,22 @@ def stakenotify(txid="", blockhash="", height=-1, walletname=""):  # receive sta
     socketio.emit('updateStake', {'date': get_current_datetime(), 'wallet': str(walletname), 'txid': str(txid), 'blockhash': str(blockhash), 'height': height})
     return str(txid)
 
+@app.route('/walletnotify/<txid>/<blockhash>/<int:height>/<walletname>')
+def walletnotify(txid="", blockhash="", height=-1, walletname=""):  # receive walletnotify notify
+    socketio.emit('updateWallet', {'date': get_current_datetime(), 'wallet': str(walletname), 'txid': str(txid), 'blockhash': str(blockhash), 'height': height})
+    return str(txid)
+
+
+@app.route('/alertnotify/<alertmsg>')
+def alertnotify(alertmsg=""):  # receive alert notify
+    socketio.emit('updateAlert', {'date': get_current_datetime(), 'alertmsg': str(alertmsg)})
+    return str(alertmsg)
+
+
+@app.route('/blocknotify/<blockhash>')
+def blocknotify(blockhash=""):  # receive block notify
+    socketio.emit('updateBlock', {'date': get_current_datetime(), 'blockhash': str(blockhash)})
+    return str(blockhash)
 
 """
 Decorator for connect
